@@ -215,6 +215,15 @@
         .data-key { color: #9cdcfe; }
         .data-string { color: #ce9178; }
         .data-number { color: #b5cea8; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 900px) {
+            .container { flex-direction: column; padding: 1rem; }
+            aside { width: 100%; border-right: none; border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; position: static; }
+            main { padding-left: 0; }
+            header { padding: 2rem 1rem; }
+            header h1 { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
@@ -302,6 +311,37 @@
                     </div>
                 </div>
             </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tier</th>
+                        <th>Entity</th>
+                        <th>Key Attributes</th>
+                        <th>Primary Consumers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tier 1</strong></td>
+                        <td><span class="tier-icon">📦</span> <strong>Pallet</strong></td>
+                        <td>GTIN-14, Ti × Hi (layers × cases), Gross weight, Hazmat class, Pallet type</td>
+                        <td>DC Receiving, TMS (Load optimization), WMS (Slotting)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tier 2</strong></td>
+                        <td><span class="tier-icon">📚</span> <strong>Case</strong></td>
+                        <td>GTIN-14, Inner pack configuration, Case cube, SDS/Hazmat flags</td>
+                        <td>WMS (Pick-face slotting), Hub-to-Store routing, DSD Receiving</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tier 3</strong></td>
+                        <td><span class="tier-icon">⚙️</span> <strong>SKU</strong></td>
+                        <td>UPC, ACES (Fitment), PIES (Product Info), Core Charge, Retail dimensions</td>
+                        <td>Z-Net (POS system), AutoZone Pro, eCommerce catalog</td>
+                    </tr>
+                </tbody>
+            </table>
 
             <div class="callout">
                 <strong>The "Weight-Out" Problem in Auto Parts:</strong> Unlike fluffy consumer packaged goods, auto parts (rotors, batteries, fluids) are extremely dense. If Pallet and Case weights are inaccurate in the MDM, a carrier truck will "weight-out" (hit DOT weight limits) long before it "cubes-out" (fills the physical space), leading to severe compliance violations or stranded freight on the DC dock.
@@ -465,11 +505,3 @@
 
 </body>
 </html>
-/* Mobile Responsiveness */
-@media (max-width: 900px) {
-    .container { flex-direction: column; padding: 1rem; }
-    aside { width: 100%; border-right: none; border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; position: static; }
-    main { padding-left: 0; }
-    header { padding: 2rem 1rem; }
-    h1 { font-size: 2rem; }
-}
