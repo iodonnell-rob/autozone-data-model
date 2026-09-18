@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,7 +101,7 @@
             margin-bottom: 5rem; 
         }
         
-        /* Updated header styles with flex for the arrow */
+        /* Header styles */
         h2 { 
             border-bottom: 2px solid var(--border); 
             padding-bottom: 0.75rem; 
@@ -133,26 +132,24 @@
             font-size: 1.2rem; 
         }
         
-        table { 
+        /* Standard Tables */
+        .standard-table { 
             width: 100%; 
             border-collapse: collapse; 
             margin: 2rem 0; 
             background: #fff;
         }
-        th, td { 
+        .standard-table th, .standard-table td { 
             text-align: left; 
             padding: 1rem; 
             border: 1px solid var(--border); 
         }
-        th { 
+        .standard-table th { 
             background: var(--bg); 
             font-weight: 600; 
             color: #111;
         }
-        .tier-icon {
-            font-size: 1.5rem;
-            margin-right: 0.5rem;
-        }
+        
         .callout { 
             background: #fdf5f6; 
             border-left: 4px solid var(--primary); 
@@ -201,21 +198,50 @@
         .tier-attributes { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .tier-attr { background: var(--bg); padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; color: #444; border: 1px solid var(--border); }
 
-        /* JSON/Code Block Styling */
-        pre {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 1.5rem;
+        /* NEW: Styled Data Cards (Replacing Raw Code) */
+        .data-card {
+            border: 1px solid var(--border);
             border-radius: 6px;
-            overflow-x: auto;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            margin-top: 1rem;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            overflow: hidden;
+            margin-top: 1.5rem;
+            margin-bottom: 3rem;
         }
-        .data-key { color: #9cdcfe; }
-        .data-string { color: #ce9178; }
-        .data-number { color: #b5cea8; }
+        .data-card-header {
+            background: var(--header-bg);
+            color: #fff;
+            padding: 1rem 1.5rem;
+            font-family: monospace;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            text-align: left;
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .data-table th {
+            background: #f1f3f5;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: #555;
+            letter-spacing: 0.5px;
+        }
+        .data-table td code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #d63384;
+            font-size: 0.9em;
+        }
+        .val-string { color: #0f5132; font-weight: 500; font-family: monospace; }
+        .val-num { color: #052c65; font-weight: 500; font-family: monospace; }
 
         /* Mobile Responsiveness */
         @media (max-width: 900px) {
@@ -224,6 +250,7 @@
             main { padding-left: 0; }
             header { padding: 2rem 1rem; }
             header h1 { font-size: 2rem; }
+            .data-card-header { flex-direction: column; gap: 0.5rem; }
         }
     </style>
 </head>
@@ -274,7 +301,6 @@
             </h2>
             <p>Every automotive part exists simultaneously at different physical levels. Collapsing these into a single flat product record is a primary cause of DC receiving errors, over-weight hub delivery vehicles, and inaccurate store planograms. Because automotive parts are heavily driven by density and hazard classifications, correct packaging MDM is business-critical.</p>
             
-            <!-- Recreated Packaging Stack Visual -->
             <div class="stack-container">
                 <div class="stack-header">Packaging Level Stack — Automotive Data Flow</div>
                 
@@ -313,7 +339,7 @@
                 </div>
             </div>
 
-            <table>
+            <table class="standard-table">
                 <thead>
                     <tr>
                         <th>Tier</th>
@@ -325,19 +351,19 @@
                 <tbody>
                     <tr>
                         <td><strong>Tier 1</strong></td>
-                        <td><span class="tier-icon">📦</span> <strong>Pallet</strong></td>
-                        <td>GTIN-14, Ti × Hi (layers × cases), Gross weight, Hazmat class, Pallet type</td>
+                        <td><span>📦</span> <strong>Pallet</strong></td>
+                        <td>GTIN-14, Ti × Hi, Gross weight, Hazmat class, Pallet type</td>
                         <td>DC Receiving, TMS (Load optimization), WMS (Slotting)</td>
                     </tr>
                     <tr>
                         <td><strong>Tier 2</strong></td>
-                        <td><span class="tier-icon">📚</span> <strong>Case</strong></td>
+                        <td><span>📚</span> <strong>Case</strong></td>
                         <td>GTIN-14, Inner pack configuration, Case cube, SDS/Hazmat flags</td>
                         <td>WMS (Pick-face slotting), Hub-to-Store routing, DSD Receiving</td>
                     </tr>
                     <tr>
                         <td><strong>Tier 3</strong></td>
-                        <td><span class="tier-icon">⚙️</span> <strong>SKU</strong></td>
+                        <td><span>⚙️</span> <strong>SKU</strong></td>
                         <td>UPC, ACES (Fitment), PIES (Product Info), Core Charge, Retail dimensions</td>
                         <td>Z-Net (POS system), AutoZone Pro, eCommerce catalog</td>
                     </tr>
@@ -356,7 +382,7 @@
             </h2>
             <p>In automotive MDM, <strong>Product</strong> is the logical parent entity (e.g., <em>Duralast Gold Ceramic Brake Pads</em>). The <strong>Item (SKU)</strong> is the physical child entity representing a specific application (e.g., <em>fits 2018 Honda Civic</em>).</p>
 
-            <table>
+            <table class="standard-table">
                 <thead>
                     <tr>
                         <th>Level</th>
@@ -391,89 +417,86 @@
 
         <section id="examples">
             <h2>
-                <div class="h2-title"><span class="num">3</span> Real-World Example: Master Data Records</div>
+                <div class="h2-title"><span class="num">3</span> Real-World Example: Data Dictionaries</div>
                 <span class="h2-arrow">▼</span>
             </h2>
-            <p>To understand why the hierarchy matters, let's look at the actual master data records passing through the supply chain. Notice how the SKU record is built for the store (POS, Fitment, Core Charges), while the Case and Pallet records are built entirely for the distribution center and freight carriers.</p>
+            <p>To understand why the hierarchy matters, let's look at the structured data properties passing through the supply chain. Notice how the SKU record is built for the store (POS, Fitment), while the Case and Pallet records are built entirely for the distribution center.</p>
             
-            <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; margin-top: 2rem;">
-                
-                <!-- SKU Level Record -->
-                <div>
-                    <h3 style="color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 0;">Tier 3: Item / SKU Record (The Sellable Unit)</h3>
-                    <p>Example: <strong>Duralast Platinum AGM Battery (H6-AGM)</strong>. Consumed by <strong>Z-Net (POS)</strong>, AutoZone Pro, and eCommerce. It contains the strict ACES (fitment) and PIES (product info) standards required for aftermarket parts.</p>
-                    
-                    <pre><code>{
-  <span class="data-key">"entity_type"</span>: <span class="data-string">"ITEM"</span>,
-  <span class="data-key">"sku_id"</span>: <span class="data-string">"H6-AGM"</span>,
-  <span class="data-key">"gtin_12"</span>: <span class="data-string">"051111556789"</span>,
-  <span class="data-key">"brand"</span>: <span class="data-string">"Duralast Platinum"</span>,
-  <span class="data-key">"pies_attributes"</span>: {
-    <span class="data-key">"part_terminology_id"</span>: <span class="data-number">10167</span>, <span class="data-string">/* AutoCare ID for Automotive Battery */</span>
-    <span class="data-key">"cca_rating"</span>: <span class="data-number">760</span>,
-    <span class="data-key">"reserve_capacity"</span>: <span class="data-number">120</span>,
-    <span class="data-key">"weight_lbs"</span>: <span class="data-number">45.5</span>
-  },
-  <span class="data-key">"aces_fitment"</span>: [
-    { <span class="data-key">"year"</span>: <span class="data-number">2018</span>, <span class="data-key">"make"</span>: <span class="data-string">"Honda"</span>, <span class="data-key">"model"</span>: <span class="data-string">"Civic"</span>, <span class="data-key">"engine"</span>: <span class="data-string">"L4-2.0L"</span> }
-  ],
-  <span class="data-key">"retail_attributes"</span>: {
-    <span class="data-key">"core_charge_amt"</span>: <span class="data-number">22.00</span>,
-    <span class="data-key">"core_item_id"</span>: <span class="data-string">"CORE-BATT-01"</span>,
-    <span class="data-key">"warranty_months"</span>: <span class="data-number">36</span>,
-    <span class="data-key">"prop_65_warning"</span>: <span class="data-string">"TRUE"</span>
-  }
-}</code></pre>
+            <!-- Styled Data Block: SKU -->
+            <h3 style="color: var(--primary); margin-top: 2.5rem; margin-bottom: 0.5rem;">Tier 3: Item / SKU Record (The Sellable Unit)</h3>
+            <p style="margin-top: 0;">Example: <strong>Duralast Platinum AGM Battery (H6-AGM)</strong>. Consumed by <strong>Z-Net (POS)</strong>, AutoZone Pro, and eCommerce.</p>
+            
+            <div class="data-card">
+                <div class="data-card-header">
+                    <span>ENTITY_TYPE: ITEM</span>
+                    <span>RECORD_ID: H6-AGM</span>
                 </div>
-
-                <!-- Case Level Record -->
-                <div>
-                    <h3 style="color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 0;">Tier 2: Case Record (Hub Replenishment Unit)</h3>
-                    <p>Example: <strong>6-Pack of STP Motor Oil</strong>. Used by the <strong>WMS</strong> for Hub-to-Store picking. It tracks inner-pack quantities and ensures Hazmat rules roll up from the individual quart bottles.</p>
-                    
-                    <pre><code>{
-  <span class="data-key">"entity_type"</span>: <span class="data-string">"CASE"</span>,
-  <span class="data-key">"case_gtin_14"</span>: <span class="data-string">"20071153123454"</span>,
-  <span class="data-key">"contains_sku"</span>: <span class="data-string">"STP-10W30-QT"</span>,
-  <span class="data-key">"logistics_attributes"</span>: {
-    <span class="data-key">"inner_pack_qty"</span>: <span class="data-number">6</span>,
-    <span class="data-key">"case_weight_lbs"</span>: <span class="data-number">12.4</span>,
-    <span class="data-key">"case_dimensions_in"</span>: <span class="data-string">"9.5 x 8.0 x 9.0"</span>,
-    <span class="data-key">"corrugated_type"</span>: <span class="data-string">"ECT-32"</span>
-  },
-  <span class="data-key">"compliance_attributes"</span>: {
-    <span class="data-key">"dot_hazmat_class"</span>: <span class="data-string">"Class 9 - Misc Hazardous"</span>,
-    <span class="data-key">"sds_required"</span>: <span class="data-string">"TRUE"</span>,
-    <span class="data-key">"spill_containment_req"</span>: <span class="data-string">"YES"</span>
-  }
-}</code></pre>
-                </div>
-
-                <!-- Pallet Level Record -->
-                <div>
-                    <h3 style="color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 0;">Tier 1: Pallet Record (The Logistics Unit)</h3>
-                    <p>Example: <strong>Pallet of Duralast Batteries</strong>. This Tier 1 record is what the <strong>TMS (Transportation Management System)</strong> uses to prevent trucks from exceeding DOT weight limits, and WMS for heavy-rack slotting.</p>
-                    
-                    <pre><code>{
-  <span class="data-key">"entity_type"</span>: <span class="data-string">"PALLET"</span>,
-  <span class="data-key">"pallet_gtin_14"</span>: <span class="data-string">"30051111556780"</span>,
-  <span class="data-key">"contains_sku"</span>: <span class="data-string">"H6-AGM"</span>,
-  <span class="data-key">"logistics_attributes"</span>: {
-    <span class="data-key">"ti_hi"</span>: <span class="data-string">"10x4"</span>, <span class="data-string">/* 10 per layer, 4 layers high */</span>
-    <span class="data-key">"total_units"</span>: <span class="data-number">40</span>,
-    <span class="data-key">"gross_weight_lbs"</span>: <span class="data-number">1870.0</span>, <span class="data-string">/* (40 * 45.5) + 50lb heavy-duty pallet */</span>
-    <span class="data-key">"pallet_type"</span>: <span class="data-string">"WOOD_HEAVY_DUTY_CHEP"</span>,
-    <span class="data-key">"max_stacking_tiers"</span>: <span class="data-number">1</span> <span class="data-string">/* Do not double stack */</span>
-  },
-  <span class="data-key">"compliance_attributes"</span>: {
-    <span class="data-key">"dot_hazmat_class"</span>: <span class="data-string">"Class 8 - Corrosive"</span>,
-    <span class="data-key">"un_number"</span>: <span class="data-string">"UN2794"</span>,
-    <span class="data-key">"sds_document_id"</span>: <span class="data-string">"SDS-AGM-001"</span>
-  }
-}</code></pre>
-                </div>
-
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Attribute Domain</th><th>System Field Name</th><th>System Value</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Identity</strong></td><td><code>gtin_12</code></td><td class="val-string">"051111556789"</td></tr>
+                        <tr><td><strong>Identity</strong></td><td><code>brand</code></td><td class="val-string">"Duralast Platinum"</td></tr>
+                        <tr><td><strong>PIES Data</strong></td><td><code>part_terminology_id</code></td><td class="val-num">10167</td></tr>
+                        <tr><td><strong>PIES Data</strong></td><td><code>weight_lbs</code></td><td class="val-num">45.5</td></tr>
+                        <tr><td><strong>ACES Fitment</strong></td><td><code>vehicle_application</code></td><td class="val-string">"2018 Honda Civic L4-2.0L"</td></tr>
+                        <tr><td><strong>Retail</strong></td><td><code>core_charge_amt</code></td><td class="val-num">22.00</td></tr>
+                        <tr><td><strong>Retail</strong></td><td><code>core_item_id</code></td><td class="val-string">"CORE-BATT-01"</td></tr>
+                        <tr><td><strong>Compliance</strong></td><td><code>prop_65_warning</code></td><td class="val-string">"TRUE"</td></tr>
+                    </tbody>
+                </table>
             </div>
+
+            <!-- Styled Data Block: Case -->
+            <h3 style="color: var(--primary); margin-top: 2.5rem; margin-bottom: 0.5rem;">Tier 2: Case Record (Hub Replenishment Unit)</h3>
+            <p style="margin-top: 0;">Example: <strong>6-Pack of STP Motor Oil</strong>. Used by the <strong>WMS</strong> for Hub-to-Store picking and delivery.</p>
+
+            <div class="data-card">
+                <div class="data-card-header">
+                    <span>ENTITY_TYPE: CASE</span>
+                    <span>RECORD_ID: 20071153123454</span>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Attribute Domain</th><th>System Field Name</th><th>System Value</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Identity</strong></td><td><code>contains_sku</code></td><td class="val-string">"STP-10W30-QT"</td></tr>
+                        <tr><td><strong>Logistics</strong></td><td><code>inner_pack_qty</code></td><td class="val-num">6</td></tr>
+                        <tr><td><strong>Logistics</strong></td><td><code>case_weight_lbs</code></td><td class="val-num">12.4</td></tr>
+                        <tr><td><strong>Logistics</strong></td><td><code>case_dimensions_in</code></td><td class="val-string">"9.5 x 8.0 x 9.0"</td></tr>
+                        <tr><td><strong>Compliance</strong></td><td><code>dot_hazmat_class</code></td><td class="val-string">"Class 9 - Misc Hazardous"</td></tr>
+                        <tr><td><strong>Compliance</strong></td><td><code>sds_required</code></td><td class="val-string">"TRUE"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Styled Data Block: Pallet -->
+            <h3 style="color: var(--primary); margin-top: 2.5rem; margin-bottom: 0.5rem;">Tier 1: Pallet Record (The Logistics Unit)</h3>
+            <p style="margin-top: 0;">Example: <strong>Pallet of Duralast Batteries</strong>. Used by the <strong>TMS</strong> to prevent trucks from exceeding weight limits.</p>
+
+            <div class="data-card">
+                <div class="data-card-header">
+                    <span>ENTITY_TYPE: PALLET</span>
+                    <span>RECORD_ID: 30051111556780</span>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Attribute Domain</th><th>System Field Name</th><th>System Value</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Identity</strong></td><td><code>contains_sku</code></td><td class="val-string">"H6-AGM"</td></tr>
+                        <tr><td><strong>Logistics</strong></td><td><code>ti_hi</code></td><td class="val-string">"10x4"</td></tr>
+                        <tr><td><strong>Logistics</strong></td><td><code>total_units</code></td><td class="val-num">40</td></tr>
+                        <tr><td><strong>Logistics</strong></td><td><code>gross_weight_lbs</code></td><td class="val-num">1870.0</td></tr>
+                        <tr><td><strong>Logistics</strong></td><td><code>max_stacking_tiers</code></td><td class="val-num">1</td></tr>
+                        <tr><td><strong>Compliance</strong></td><td><code>dot_hazmat_class</code></td><td class="val-string">"Class 8 - Corrosive"</td></tr>
+                        <tr><td><strong>Compliance</strong></td><td><code>un_number</code></td><td class="val-string">"UN2794"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
         </section>
 
         <section id="compliance">
@@ -506,5 +529,3 @@
 
 </body>
 </html>
-
-```
