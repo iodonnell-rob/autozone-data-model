@@ -12,6 +12,12 @@
             --border: #e1e4e8; 
             --header-bg: #222;
         }
+        
+        /* Smooth scrolling for anchor links */
+        html { 
+            scroll-behavior: smooth; 
+        }
+        
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             line-height: 1.6; 
@@ -94,14 +100,25 @@
         section { 
             margin-bottom: 5rem; 
         }
+        
+        /* Updated header styles with flex for the arrow */
         h2 { 
             border-bottom: 2px solid var(--border); 
             padding-bottom: 0.75rem; 
             color: #111; 
             display: flex; 
             align-items: center; 
-            gap: 1rem; 
+            justify-content: space-between;
             margin-top: 0;
+        }
+        .h2-title {
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+        }
+        .h2-arrow {
+            color: #ccc;
+            font-size: 0.8em;
         }
         h2 span.num { 
             background: var(--primary); 
@@ -114,6 +131,7 @@
             border-radius: 50%; 
             font-size: 1.2rem; 
         }
+        
         table { 
             width: 100%; 
             border-collapse: collapse; 
@@ -150,6 +168,38 @@
             margin-bottom: 0.5rem; 
         }
         
+        /* Packaging Level Stack Visual Diagram */
+        .stack-container {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        .stack-header { 
+            font-weight: 600; 
+            margin-bottom: 1.5rem; 
+            text-align: center; 
+            color: #555; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-size: 0.9rem;
+        }
+        .stack-tier {
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            padding: 1.5rem;
+            background: #fff;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .stack-tier.pallet { border-color: #666; border-width: 3px; }
+        .stack-tier.case { margin: 1rem 1rem 0 1rem; border-color: #999; }
+        .stack-tier.sku { margin: 1rem 1rem 0 1rem; border-color: var(--primary); }
+        .tier-header { font-weight: bold; font-size: 1.1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .tier-attributes { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tier-attr { background: var(--bg); padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem; color: #444; border: 1px solid var(--border); }
+
         /* JSON/Code Block Styling */
         pre {
             background: #1e1e1e;
@@ -208,39 +258,50 @@
 
     <main>
         <section id="hierarchy">
-            <h2><span class="num">1</span> Packaging Hierarchy: Pallet → Case → SKU</h2>
+            <h2>
+                <div class="h2-title"><span class="num">1</span> Packaging Hierarchy: Pallet → Case → SKU</div>
+                <span class="h2-arrow">▼</span>
+            </h2>
             <p>Every automotive part exists simultaneously at different physical levels. Collapsing these into a single flat product record is a primary cause of DC receiving errors, over-weight hub delivery vehicles, and inaccurate store planograms. Because automotive parts are heavily driven by density and hazard classifications, correct packaging MDM is business-critical.</p>
             
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tier</th>
-                        <th>Entity</th>
-                        <th>Key Attributes</th>
-                        <th>Primary Consumers</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Tier 1</strong></td>
-                        <td><span class="tier-icon">📦</span> <strong>Pallet</strong></td>
-                        <td>GTIN-14, Ti × Hi (layers × cases), Gross weight, Hazmat class, Pallet type</td>
-                        <td>DC Receiving, TMS (Load optimization), WMS (Slotting)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tier 2</strong></td>
-                        <td><span class="tier-icon">📚</span> <strong>Case</strong></td>
-                        <td>GTIN-14, Inner pack configuration, Case cube, SDS/Hazmat flags</td>
-                        <td>WMS (Pick-face slotting), Hub-to-Store routing, DSD Receiving</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tier 3</strong></td>
-                        <td><span class="tier-icon">⚙️</span> <strong>SKU</strong></td>
-                        <td>UPC, ACES (Fitment), PIES (Product Info), Core Charge, Retail dimensions</td>
-                        <td>Z-Net (POS system), AutoZone Pro, eCommerce catalog</td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Recreated Packaging Stack Visual -->
+            <div class="stack-container">
+                <div class="stack-header">Packaging Level Stack — Automotive Data Flow</div>
+                
+                <div class="stack-tier pallet">
+                    <div class="tier-header"><span>📦</span> Tier 1: Pallet / Heavy Load</div>
+                    <div class="tier-attributes">
+                        <span class="tier-attr">GTIN-14 (Pallet)</span>
+                        <span class="tier-attr">Ti × Hi (layers × cases)</span>
+                        <span class="tier-attr">Gross weight (lbs)</span>
+                        <span class="tier-attr">Pallet type (Standard/Heavy)</span>
+                        <span class="tier-attr">Hazmat class (DOT)</span>
+                    </div>
+                    
+                    <div class="stack-tier case">
+                        <div class="tier-header"><span>📚</span> Tier 2: Case / Hub Replenishment</div>
+                        <div class="tier-attributes">
+                            <span class="tier-attr">GTIN-14 (Case)</span>
+                            <span class="tier-attr">Inner pack qty</span>
+                            <span class="tier-attr">Case gross weight</span>
+                            <span class="tier-attr">Case dimensions (L×W×H)</span>
+                            <span class="tier-attr">SDS/Hazmat flags</span>
+                        </div>
+
+                        <div class="stack-tier sku">
+                            <div class="tier-header"><span>⚙️</span> Tier 3: Consumer Unit (SKU)</div>
+                            <div class="tier-attributes">
+                                <span class="tier-attr">UPC</span>
+                                <span class="tier-attr">ACES (Fitment)</span>
+                                <span class="tier-attr">PIES (Product Info)</span>
+                                <span class="tier-attr">Core Charge Amt</span>
+                                <span class="tier-attr">Retail dimensions</span>
+                                <span class="tier-attr">Warranty length</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="callout">
                 <strong>The "Weight-Out" Problem in Auto Parts:</strong> Unlike fluffy consumer packaged goods, auto parts (rotors, batteries, fluids) are extremely dense. If Pallet and Case weights are inaccurate in the MDM, a carrier truck will "weight-out" (hit DOT weight limits) long before it "cubes-out" (fills the physical space), leading to severe compliance violations or stranded freight on the DC dock.
@@ -248,7 +309,10 @@
         </section>
 
         <section id="inheritance">
-            <h2><span class="num">2</span> Product → Item Inheritance &amp; Fitment</h2>
+            <h2>
+                <div class="h2-title"><span class="num">2</span> Product → Item Inheritance &amp; Fitment</div>
+                <span class="h2-arrow">▼</span>
+            </h2>
             <p>In automotive MDM, <strong>Product</strong> is the logical parent entity (e.g., <em>Duralast Gold Ceramic Brake Pads</em>). The <strong>Item (SKU)</strong> is the physical child entity representing a specific application (e.g., <em>fits 2018 Honda Civic</em>).</p>
 
             <table>
@@ -285,15 +349,18 @@
         </section>
 
         <section id="examples">
-            <h2><span class="num">3</span> Real-World Example: Duralast Platinum Battery</h2>
-            <p>To understand why the hierarchy matters, let's look at the actual master data records for a <strong>Duralast Platinum AGM Battery (H6-AGM)</strong>. Notice how the SKU record is built for the store (POS, Fitment, Core Charges), while the Pallet record is built entirely for the distribution center and freight carriers.</p>
+            <h2>
+                <div class="h2-title"><span class="num">3</span> Real-World Example: Master Data Records</div>
+                <span class="h2-arrow">▼</span>
+            </h2>
+            <p>To understand why the hierarchy matters, let's look at the actual master data records passing through the supply chain. Notice how the SKU record is built for the store (POS, Fitment, Core Charges), while the Case and Pallet records are built entirely for the distribution center and freight carriers.</p>
             
             <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; margin-top: 2rem;">
                 
                 <!-- SKU Level Record -->
                 <div>
                     <h3 style="color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 0;">Tier 3: Item / SKU Record (The Sellable Unit)</h3>
-                    <p>This record is consumed by <strong>Z-Net (POS)</strong>, AutoZone Pro, and the eCommerce catalog. It contains the strict ACES (fitment) and PIES (product info) standards required for aftermarket parts.</p>
+                    <p>Example: <strong>Duralast Platinum AGM Battery (H6-AGM)</strong>. Consumed by <strong>Z-Net (POS)</strong>, AutoZone Pro, and eCommerce. It contains the strict ACES (fitment) and PIES (product info) standards required for aftermarket parts.</p>
                     
                     <pre><code>{
   <span class="data-key">"entity_type"</span>: <span class="data-string">"ITEM"</span>,
@@ -318,10 +385,33 @@
 }</code></pre>
                 </div>
 
+                <!-- Case Level Record -->
+                <div>
+                    <h3 style="color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 0;">Tier 2: Case Record (Hub Replenishment Unit)</h3>
+                    <p>Example: <strong>6-Pack of STP Motor Oil</strong>. Used by the <strong>WMS</strong> for Hub-to-Store picking. It tracks inner-pack quantities and ensures Hazmat rules roll up from the individual quart bottles.</p>
+                    
+                    <pre><code>{
+  <span class="data-key">"entity_type"</span>: <span class="data-string">"CASE"</span>,
+  <span class="data-key">"case_gtin_14"</span>: <span class="data-string">"20071153123454"</span>,
+  <span class="data-key">"contains_sku"</span>: <span class="data-string">"STP-10W30-QT"</span>,
+  <span class="data-key">"logistics_attributes"</span>: {
+    <span class="data-key">"inner_pack_qty"</span>: <span class="data-number">6</span>,
+    <span class="data-key">"case_weight_lbs"</span>: <span class="data-number">12.4</span>,
+    <span class="data-key">"case_dimensions_in"</span>: <span class="data-string">"9.5 x 8.0 x 9.0"</span>,
+    <span class="data-key">"corrugated_type"</span>: <span class="data-string">"ECT-32"</span>
+  },
+  <span class="data-key">"compliance_attributes"</span>: {
+    <span class="data-key">"dot_hazmat_class"</span>: <span class="data-string">"Class 9 - Misc Hazardous"</span>,
+    <span class="data-key">"sds_required"</span>: <span class="data-string">"TRUE"</span>,
+    <span class="data-key">"spill_containment_req"</span>: <span class="data-string">"YES"</span>
+  }
+}</code></pre>
+                </div>
+
                 <!-- Pallet Level Record -->
                 <div>
                     <h3 style="color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-top: 0;">Tier 1: Pallet Record (The Logistics Unit)</h3>
-                    <p>Because batteries are incredibly dense and ship directly on pallets (bypassing corrugated cases), this Tier 1 record is what the <strong>WMS (Warehouse Management System)</strong> uses to assign heavy-rack floor slots, and what the <strong>TMS (Transportation Management System)</strong> uses to prevent trucks from exceeding DOT weight limits.</p>
+                    <p>Example: <strong>Pallet of Duralast Batteries</strong>. This Tier 1 record is what the <strong>TMS (Transportation Management System)</strong> uses to prevent trucks from exceeding DOT weight limits, and WMS for heavy-rack slotting.</p>
                     
                     <pre><code>{
   <span class="data-key">"entity_type"</span>: <span class="data-string">"PALLET"</span>,
@@ -346,7 +436,10 @@
         </section>
 
         <section id="compliance">
-            <h2><span class="num">4</span> Regulatory &amp; Compliance</h2>
+            <h2>
+                <div class="h2-title"><span class="num">4</span> Regulatory &amp; Compliance</div>
+                <span class="h2-arrow">▼</span>
+            </h2>
             <p>Automotive retail carries significantly higher regulatory risk than standard retail, meaning attributes must be rigorously managed at every packaging level:</p>
             
             <ul>
@@ -357,7 +450,10 @@
         </section>
 
         <section id="value">
-            <h2><span class="num">5</span> Business Value: Routing & Revenue</h2>
+            <h2>
+                <div class="h2-title"><span class="num">5</span> Business Value: Routing & Revenue</div>
+                <span class="h2-arrow">▼</span>
+            </h2>
             <ul>
                 <li><strong>Hub & Feeder Routing:</strong> AutoZone utilizes a "Hub and Spoke" model, delivering parts from Mega-Hubs to local stores multiple times a day. Accurate Case and SKU dimensional data ensures that delivery totes are packed efficiently and driver vehicles aren't illegally overloaded with dense parts.</li>
                 <li><strong>Commercial (DIFM) Trust:</strong> Professional mechanics ordering through AutoZone Pro rely on 100% accurate ACES fitment data attached to the SKU. Accurate item data means the right part arrives the first time, drastically reducing expensive commercial returns and bay-tie-ups.</li>
